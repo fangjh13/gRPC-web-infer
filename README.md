@@ -4,7 +4,7 @@
 
 本文主要在http服务中(以下代码使用的是flask)，使用[gPRC Python](https://grpc.io/docs/tutorials/basic/python/)远程调用训练好的模型返回RESTful接口，机器学习模型是一个已训练好的人脸检测模型(mtcnn)作为演示。
 
-所有源码托管在[github]()，可按需要查看获取，下文只列出部分主要的代码提供一些思路。
+所有源码托管在[github](https://github.com/fangjh13/gRPC-web-infer)，可按需要查看获取，下文只列出部分主要的代码提供一些思路。
 
 ## Proto定义
 
@@ -21,7 +21,7 @@ message Image {
 }
 ```
 
-`message Image`定义了单张图片的存放格式主要包括`raw_data`存放图片二进制，还有图片的长高和唯一id，`_meta_data`记录各种元数据具体实现可查看上面github源码[infer.proto]()
+`message Image`定义了单张图片的存放格式主要包括`raw_data`存放图片二进制，还有图片的长高和唯一id，`_meta_data`记录各种元数据具体实现可查看上面github源码[infer.proto](https://github.com/fangjh13/gRPC-web-infer/blob/master/protos/infer.proto)
 
 ```protobuf
 // each message Result
@@ -125,7 +125,7 @@ server.start()
 server.wait_for_termination()
 ```
 
-服务端代码[`inference_server.py`]()，之后启动即可。
+服务端代码[`inference_server.py`](https://github.com/fangjh13/gRPC-web-infer/blob/master/inference_server.py)，之后启动即可。
 
 ```shell
 python3 inference_server.py
@@ -133,7 +133,7 @@ python3 inference_server.py
 
 ## 使用gRPC客户端测试
 
-客户端的代码简单许多构建`Image`对象给`Stub`调用即可，代码如下[`inference_client`]()
+客户端的代码简单许多构建`Image`对象给`Stub`调用即可，代码如下[`inference_client`](https://github.com/fangjh13/gRPC-web-infer/blob/master/inference_client.py)
 
 ```python
 from protos.infer_pb2 import Point, Box, Landmarks, Result, InferResults
@@ -177,7 +177,7 @@ if __name__ == '__main__':
         p.start()
 ```
 
-[inference_server_multiprocess.py]()启动三个进程，需要注意的是使用此方法需要编译安装grpcio,否者会报`grpc._channel._InactiveRpcError`错，之后以上面相同的方式启动即可
+[inference_server_multiprocess.py](https://github.com/fangjh13/gRPC-web-infer/blob/master/inference_server_multiprocess.py)启动三个进程，需要注意的是使用此方法需要编译安装grpcio,否者会报`grpc._channel._InactiveRpcError`错，之后以上面相同的方式启动即可
 
 ```shell
 pip install grpcio --no-binary grpcio
@@ -222,7 +222,7 @@ def batch_features():
         return jsonify(res)
 ```
 
-上面只是在路由中使用gRPC调用，`ServiceClient`类定义了错误处理和超时处理方面调用，代码如下
+上面只是在路由中使用gRPC调用，`ServiceClient`类定义了错误处理和超时处理方便调用，代码如下
 
 ```python
 class ServiceClient:
@@ -261,7 +261,7 @@ class ServiceClient:
             raise
 ```
 
-以上代码在[`web_app.py`]()和[`lable.py`]()两个文件中，测试脚本在[`test_web.py`]中。
+以上代码在[`web_app.py`](https://github.com/fangjh13/gRPC-web-infer/blob/master/web_app.py)和[`lable.py`](https://github.com/fangjh13/gRPC-web-infer/blob/master/utils/label.py)两个文件中，测试脚本在[`test_web.py`](https://github.com/fangjh13/gRPC-web-infer/blob/master/test_web.py)中。
 
 ## Reference
 
