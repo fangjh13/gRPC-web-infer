@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+
+// store meta data
+message MetaData {
+    double timestamp = 1;
+    // record run env
+    enum Environment {
+        UNKNOWN_ENVIRONMENT = 0;
+        PRODUCTION = 1;
+        DEVELOPMENT = 2;
+        STAGING = 3;
+    }
+    Environment environment = 2;
+    string uuid = 3;
+    string iso_date = 4;
+}
+
+// coordinate point
+message Point {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+// face landmarks contain 5 point
+message Landmarks {
+    Point left_eye = 1;
+    Point right_eye = 2;
+    Point nose = 3;
+    Point mouth_left = 4;
+    Point mouth_right = 5;
+}
+
+// the bounding box
+message Box {
+    Point up_left = 1;
+    Point lower_right = 2;
+}
+
+
+// request image
+message Image {
+    bytes raw_data = 1;
+    int32 height = 2;
+    int32 width = 3;
+    string image_id = 4;
+    MetaData _meta_data = 5;
+}
+
+// each message Result
+message Result {
+    Box box = 1;
+    Landmarks landmarks = 2;
+    double confidence = 3;
+}
+
+// return results
+message InferResults {
+    string image_id = 1;
+    MetaData _meta_data = 2;
+    repeated Result results = 3;
+}
+
+
+// run inference
+service Inference {
+  rpc Predict (Image) returns (InferResults) {}
+}
