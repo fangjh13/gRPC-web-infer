@@ -131,6 +131,8 @@ server.wait_for_termination()
 python3 inference_server.py
 ```
 
+PS: 本文tf使用的是cpu版本，你也可以用gpu版本加速
+
 ## 使用gRPC客户端测试
 
 客户端的代码简单许多构建`Image`对象给`Stub`调用即可，代码如下[`inference_client`](https://github.com/fangjh13/gRPC-web-infer/blob/master/inference_client.py)

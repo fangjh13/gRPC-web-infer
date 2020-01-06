@@ -17,7 +17,7 @@ class InferenceServicer(infer_pb2_grpc.InferenceServicer):
 
     def Predict(self, request, context):
         metadata = dict(context.invocation_metadata())
-        print(f"remote metada {list(metadata.items())}")
+        print(f"remote metadata {list(metadata.items())}")
         image = Image.open(BytesIO(request.raw_data)).convert('RGB')
         print(f'receive a image size {image.width}x{image.height}')
         infer_result_list = self.detector.detect_faces(np.array(image))

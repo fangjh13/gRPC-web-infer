@@ -1,0 +1,4 @@
+Flask==1.1.1
+grpcio==1.26.0
+grpcio-tools==1.26.0
+pytz==2019.3

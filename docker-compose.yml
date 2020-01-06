@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  inference:
+    build:
+      context: .
+      dockerfile: docker/infer_server.Dockerfile
+    image: inference-server:v1.0
+    restart: always
+  web:
+    build:
+      context: .
+      dockerfile: docker/web_app.Dockerfile
+    image: web:v1.0
+    depends_on:
+        - inference
+    restart: always
+    ports:
+        - "5000:5000"
