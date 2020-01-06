@@ -10,7 +10,7 @@ app.config['predict'] = ServiceClient(
 
 
 @app.route('/predict', methods=["POST"])
-def batch_features():
+def predict():
     res = {"message": "", "results": []}
     if request.json:
         req_dict = request.get_json()
