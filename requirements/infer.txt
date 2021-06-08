@@ -1,5 +1,5 @@
 grpcio==1.26.0
 grpcio-tools==1.26.0
 mtcnn==0.1.0
-Pillow==7.0.0
+Pillow==8.2.0
 pytz==2019.3
